@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ThreeDots } from 'react-loader-spinner';
-import logotrackit from '../assets/imgs/logotrackit.svg';
-import styled from 'styled-components';
 import axios from 'axios';
+import logotrackit from '../assets/imgs/logotrackit.svg';
+import HomeContainer from './common/HomeContainer';
+import Logo from './common/Logo';
+import Input from './common/Input';
+import Button from './common/Button';
 
 export default function PageLogin() {
   const navigate = useNavigate('');
@@ -23,15 +26,14 @@ export default function PageLogin() {
     );
 
     promise.catch(() => {
-      alert('Usuário ou senha incorretos!');
+      alert('E-mail ou senha incorreta!');
       setLoading(true);
-      setEmail('');
       setPassword('');
     });
 
-    promise.then((response) => {
+    promise.then((r) => {
+      console.log(r);
       navigate(`/hoje`);
-      console.log(response);
     });
   }
 
@@ -75,69 +77,3 @@ export default function PageLogin() {
     </HomeContainer>
   );
 }
-
-const HomeContainer = styled.div`
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  p {
-    text-decoration: underline;
-    color: #52b6ff;
-    font-size: 14px;
-    font-weight: 400;
-  }
-
-  form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-`;
-
-const Logo = styled.img`
-  width: 180px;
-  height: 178px;
-  margin-bottom: 25px;
-`;
-
-const Input = styled.input`
-  width: 80vw;
-  height: 45px;
-  border: solid 1px #d4d4d4;
-  border-radius: 5px;
-  box-sizing: border-box;
-  margin-bottom: 6px;
-  padding: 10px;
-  box-sizing: border-box;
-  font-size: 20px;
-  background-color: ${(props) => (props.$loading ? '#ffffff' : '#F2F2F2')};
-  color: ${(props) => (props.$loading ? '#666666' : '#AFAFAF')};
-
-  &::placeholder {
-    color: #d4d4d4;
-  }
-
-  &:focus {
-    outline: none;
-  }
-`;
-
-const Button = styled.button`
-  background-color: #52b6ff;
-  width: 80vw;
-  height: 45px;
-  border: none;
-  border-radius: 4.6px;
-  color: #ffffff;
-  font-size: 20px;
-  font-weight: 400;
-  margin-bottom: 25px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: ${(props) => props.opacity};
-`;

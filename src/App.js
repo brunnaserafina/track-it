@@ -8,6 +8,8 @@ import './assets/css/style.css';
 export default function App() {
   return (
     <>
+      {/* <GlobalStyle /> */}
+      {/* <Wrapper> */}
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<PageLogin />} />
@@ -15,6 +17,7 @@ export default function App() {
           <Route path="/hoje" element={<PageToday />} />
         </Routes>
       </BrowserRouter>
+      {/* </Wrapper> */}
     </>
   );
 }
