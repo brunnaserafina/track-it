@@ -8,17 +8,18 @@ const HomeContainer = styled.div`
   justify-content: center;
   align-items: center;
 
-  p {
-    text-decoration: underline;
-    color: #52b6ff;
-    font-size: 14px;
-    font-weight: 400;
-  }
-
   form {
     display: flex;
     flex-direction: column;
     justify-content: center;
+  }
+
+  a {
+    text-decoration: underline #52b6ff;
+    color: #52b6ff;
+    font-size: 14px;
+    font-weight: 400;
+    margin-top: 25px;
   }
 `;
 

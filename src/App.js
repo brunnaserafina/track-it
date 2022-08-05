@@ -12,11 +12,12 @@ import UserContext from './context/UserContext';
 export default function App() {
   const [userimg, setUserimg] = useState('');
   const [percentage] = useState(0);
+  const [token, setToken] = useState('');
 
   return (
     <>
       <BrowserRouter>
-        <UserContext.Provider value={{ userimg, setUserimg, percentage }}>
+        <UserContext.Provider value={{ userimg, setUserimg, percentage, token, setToken }}>
           <Routes>
             <Route path="/" element={<PageLogin />} />
             <Route path="/cadastro" element={<PageRegister />} />

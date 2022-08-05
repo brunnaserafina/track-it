@@ -82,9 +82,9 @@ export default function PageRegister() {
       />
 
       {loading ? (
-        <Button onClick={joinRegister}>Cadastrar</Button>
+        <Button onClick={joinRegister} width={'80vw'} height={'45px'}>Cadastrar</Button>
       ) : (
-        <Button opacity={'0.7'}>
+        <Button opacity={'0.7'} width={'80vw'} height={'45px'}>
           <ThreeDots color="#FFFFFF" height={15} />
         </Button>
       )}

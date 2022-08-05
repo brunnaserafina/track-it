@@ -13,10 +13,10 @@ import UserContext from '../context/UserContext';
 export default function PageLogin() {
   const navigate = useNavigate('');
   const [loading, setLoading] = useState(true);
-  const [token, setToken] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { setUserimg } = useContext(UserContext);
+  const { setToken } = useContext(UserContext);
 
   function joinLogin(event) {
     event.preventDefault();
@@ -69,9 +69,11 @@ export default function PageLogin() {
           onChange={(e) => setPassword(e.target.value)}
         />
         {loading ? (
-          <Button type="submit">Entrar</Button>
+          <Button type="submit" width={'80vw'} height={'45px'}>
+            Entrar
+          </Button>
         ) : (
-          <Button opacity={'0.7'}>
+          <Button opacity={'0.7'} width={'80vw'} height={'45px'}>
             <ThreeDots color="#FFFFFF" height={15} />
           </Button>
         )}
