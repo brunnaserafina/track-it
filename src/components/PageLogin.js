@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ThreeDots } from 'react-loader-spinner';
 import axios from 'axios';
@@ -7,32 +7,41 @@ import HomeContainer from './common/HomeContainer';
 import Logo from './common/Logo';
 import Input from './common/Input';
 import Button from './common/Button';
+import { useContext } from 'react';
+import UserContext from '../context/UserContext';
 
 export default function PageLogin() {
   const navigate = useNavigate('');
   const [loading, setLoading] = useState(true);
+  const [token, setToken] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { setUserimg } = useContext(UserContext);
 
-  function joinLogin() {
+  function joinLogin(event) {
+    event.preventDefault();
+    console.log('alo');
     setLoading(false);
 
     const promise = axios.post(
       'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login',
       {
-        email: { email },
-        password: { password },
+        email: email,
+        password: password,
       }
     );
 
     promise.catch(() => {
       alert('E-mail ou senha incorreta!');
       setLoading(true);
+      setEmail('');
       setPassword('');
     });
 
     promise.then((r) => {
       console.log(r);
+      setToken(r.data.token);
+      setUserimg(r.data.image);
       navigate(`/hoje`);
     });
   }
@@ -41,14 +50,13 @@ export default function PageLogin() {
     <HomeContainer>
       <Logo src={logotrackit} />
 
-      <form>
+      <form onSubmit={joinLogin}>
         <Input
           $loading={loading}
           type="email"
           placeholder="email"
           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
           required
-          title="Insira um e-mail válido"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -56,14 +64,12 @@ export default function PageLogin() {
           $loading={loading}
           type="password"
           placeholder="senha"
+          required
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-
         {loading ? (
-          <Button type="submit" onClick={joinLogin}>
-            Entrar
-          </Button>
+          <Button type="submit">Entrar</Button>
         ) : (
           <Button opacity={'0.7'}>
             <ThreeDots color="#FFFFFF" height={15} />

@@ -2,19 +2,19 @@ import Header from './Header';
 import Footer from './Footer';
 import styled from 'styled-components';
 
-export default function PageToday() {
+export default function History() {
   return (
     <>
-      <TodayContainer>
+      <HistoryContainer>
         <Header />
 
         <Footer />
-      </TodayContainer>
+      </HistoryContainer>
     </>
   );
 }
 
-const TodayContainer = styled.div`
+const HistoryContainer = styled.div`
   background-color: #e5e5e5;
   height: 100vh;
 `;

@@ -1,13 +1,14 @@
 import styled from 'styled-components';
+import { useContext } from 'react';
+import UserContext from '../context/UserContext';
 
 export default function Header() {
+  const { userimg } = useContext(UserContext);
+
   return (
     <HeaderContainer>
       <h1>TrackIt</h1>
-      <img
-        src="https://mixdeseries.com.br/wp-content/uploads/2021/07/rick-and-morty-s5-5-1-696x392.jpg"
-        alt="picture-user"
-      />
+      <img src={userimg} alt="picture-user" />
     </HeaderContainer>
   );
 }
@@ -36,4 +37,3 @@ const HeaderContainer = styled.div`
     border-radius: 98.5px;
   }
 `;
-

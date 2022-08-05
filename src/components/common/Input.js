@@ -18,7 +18,7 @@ const Input = styled.input`
   }
 
   &:focus {
-    outline: none;
+    outline: auto #52B6FF;
   }
 `;
 
