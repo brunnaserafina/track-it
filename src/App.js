@@ -15,6 +15,7 @@ export default function App() {
   const [percentage] = useState(0);
   const [token, setToken] = useState('');
   const [loading, setLoading] = useState(true);
+  const [week, setWeek] = useState([]);
 
   return (
     <>
@@ -28,6 +29,8 @@ export default function App() {
             setToken,
             loading,
             setLoading,
+            week,
+            setWeek,
           }}
         >
           <Routes>

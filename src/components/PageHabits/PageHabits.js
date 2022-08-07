@@ -9,9 +9,12 @@ import { useContext } from 'react';
 import UserContext from '../../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { ThreeDots } from 'react-loader-spinner';
 
 export default function PageHabits() {
   const [newhabit, setNewhabit] = useState(false);
+  const [reloadHabits, setReloadHabits] = useState(false);
+  const [habitname, setHabitname] = useState('');
 
   function addHabit() {
     setNewhabit(true);
@@ -33,26 +36,39 @@ export default function PageHabits() {
           </Button>
         </div>
 
-        {newhabit ? (
-          <RegisterHabit newhabit={newhabit} setNewhabit={setNewhabit} />
-        ) : (
-          ''
-        )}
+        <RegisterHabit
+          newhabit={newhabit}
+          setNewhabit={setNewhabit}
+          reloadHabits={reloadHabits}
+          setReloadHabits={setReloadHabits}
+          habitname={habitname}
+          setHabitname={setHabitname}
+        />
 
-        <RenderHabits />
+        <RenderHabits
+          reloadHabits={reloadHabits}
+          setReloadHabits={setReloadHabits}
+        />
       </HabitsContainer>
       <Footer />
     </>
   );
 }
 
-function RegisterHabit({ newhabit, setNewhabit }) {
+function RegisterHabit({
+  newhabit,
+  setNewhabit,
+  reloadHabits,
+  setReloadHabits,
+  habitname,
+  setHabitname,
+}) {
   const [loading, setLoading] = useState(true);
-  const [color, setColor] = useState(true);
+  const [save, setSave] = useState(false);
   const { token } = useContext(UserContext);
   const [dias, setDias] = useState([]);
-  const [habitname, setHabitname] = useState('');
-  const [weekdays, setWeekdays] = useState('');
+  const [disabled, setDisabled] = useState(false);
+  const { week, setWeek } = useContext(UserContext);
 
   const daysWeek = [
     { num: 0, day: 'D' },
@@ -61,46 +77,63 @@ function RegisterHabit({ newhabit, setNewhabit }) {
     { num: 3, day: 'Q' },
     { num: 4, day: 'Q' },
     { num: 5, day: 'S' },
-    { num: 6, day: 'S' }
+    { num: 6, day: 'S' },
   ];
 
-  function select() {
-    setColor(!color);
-    console.log('Mudar cor');
-  }
+  function saveHabit(event) {
+    event.preventDefault(event);
+    setSave(true);
+    setLoading(false);
+    setDisabled(true);
 
-  function saveHabit() {
-    console.log('Salvar hábito');
-    setNewhabit(!newhabit);
+    if (week.length === 0) {
+      alert('Digite o nome do hábito e selecione no mínimo um dia da semana!');
+      setSave(false);
+      setLoading(true);
+      setDisabled(false);
+    } else if (habitname.length === 0) {
+      alert('Digite o nome do hábito');
+      setSave(false);
+      setLoading(true);
+      setDisabled(false);
+    } else {
+      const request = axios.post(
+        'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits',
+        {
+          name: habitname,
+          days: week.sort(),
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
 
-    const request = axios.post(
-      'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits',
-      {
-        name: "Dormir cedo",
-        days: [1, 3, 4],
-      },
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
+      request.catch((response) => {
+        console.log(response);
+        alert('Algo deu errado!');
+        setDisabled(false);
+        setSave(false);
+        setLoading(true);
+      });
 
-    request.catch((response) => {
-      console.log(response);
-    });
-
-    request.then((response) => {
-      console.log(response.data);
-    });
-
-    
+      request.then((response) => {
+        setNewhabit(!newhabit);
+        console.log(week);
+        console.log(response.data);
+        setReloadHabits(!reloadHabits);
+        setSave(false);
+        setHabitname('');
+        setDisabled(false);
+        setLoading(true);
+        setWeek([]);
+      });
+    }
   }
 
   function cancelHabit() {
-    console.log('Cancelar hábito');
-    //resetar todo o objeto;
     setNewhabit(!newhabit);
   }
 
   return (
-    <Form>
+    <Form onSubmit={(event) => event.preventDefault()} $newhabit={newhabit}>
       <Input
         $loading={loading}
         type="text"
@@ -108,47 +141,79 @@ function RegisterHabit({ newhabit, setNewhabit }) {
         required
         value={habitname}
         onChange={(e) => setHabitname(e.target.value)}
+        disabled={disabled}
       />
       <Days>
         {daysWeek.map((day, index) => (
-          <Day key={index} day={day.day} dias={dias} setDias={setDias} />
+          <Day
+            key={index}
+            day={day.day}
+            dias={dias}
+            setDias={setDias}
+            num={day.num}
+            disabled={disabled}
+          />
         ))}
       </Days>
       <span>
-        <p onClick={cancelHabit}>Cancelar</p>
-        <Button
-          width={'84px'}
-          height={'35px'}
-          fontSize={'16px'}
-          onClick={saveHabit}
-        >
-          Salvar
-        </Button>
+        <Cancel disabled={disabled} onClick={cancelHabit}>
+          Cancelar
+        </Cancel>
+
+        {save ? (
+          <Button opacity={'0.7'} width={'84px'} height={'35px'}>
+            <ThreeDots color="#FFFFFF" height={15} />
+          </Button>
+        ) : (
+          <Button
+            width={'84px'}
+            height={'35px'}
+            fontSize={'16px'}
+            onClick={saveHabit}
+            type="submit"
+          >
+            Salvar
+          </Button>
+        )}
       </span>
     </Form>
   );
 }
 
-function Day({ day }) {
+function Day({ day, num, disabled }) {
   const [background, setBackground] = useState(true);
-  const week = [];
+  const { week } = useContext(UserContext);
 
   function choose() {
     setBackground(false);
+    week.push(num);
+    console.log(week);
   }
 
   function unChoose() {
     setBackground(true);
+    week.splice(week.indexOf(num), 1);
+    console.log(week);
   }
 
   return (
     <>
       {background ? (
-        <Dayy onClick={choose} background={'#ffffff'} cor={'#DBDBDB'}>
+        <Dayy
+          onClick={choose}
+          disabled={disabled}
+          background={'#ffffff'}
+          cor={'#DBDBDB'}
+        >
           {day}
         </Dayy>
       ) : (
-        <Dayy onClick={unChoose} background={'#CFCFCF'} cor={'#ffffff'}>
+        <Dayy
+          onClick={unChoose}
+          disabled={disabled}
+          background={'#CFCFCF'}
+          cor={'#ffffff'}
+        >
           {day}
         </Dayy>
       )}
@@ -158,7 +223,7 @@ function Day({ day }) {
 
 const HabitsContainer = styled.div`
   background-color: #e5e5e5;
-  height: 100vh;
+  height: 200vh;
   margin-top: 70px;
   display: flex;
   flex-direction: column;
@@ -186,7 +251,7 @@ const HabitsContainer = styled.div`
   }
 `;
 
-const Form = styled.span`
+const Form = styled.form`
   width: 90vw;
   height: 180px;
   background-color: #ffffff;
@@ -195,6 +260,7 @@ const Form = styled.span`
   box-sizing: border-box;
   border-radius: 5px;
   margin-bottom: 10px;
+  display: ${(props) => (props.$newhabit ? 'initial' : 'none')};
 
   > span {
     width: 80vw;
@@ -202,12 +268,6 @@ const Form = styled.span`
     align-items: center;
     justify-content: end;
     margin-top: 29px;
-  }
-
-  p {
-    font-size: 16px;
-    color: #52b6ff;
-    margin-right: 23px;
   }
 `;
 
@@ -228,4 +288,14 @@ const Dayy = styled.button`
   margin-top: 2px;
   font-size: 20px;
   font-weight: 400;
+  font-family: Lexend Deca;
+`;
+
+const Cancel = styled.button`
+  border: none;
+  background-color: #ffffff;
+  font-size: 16px;
+  color: #52b6ff;
+  margin-right: 23px;
+  opacity: ${(props) => (props.$save ? '0.6' : '1.0')};
 `;

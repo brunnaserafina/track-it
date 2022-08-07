@@ -4,31 +4,35 @@ import UserContext from '../../context/UserContext';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
-export default function RenderHabits() {
+export default function RenderHabits({ reloadHabits, setReloadHabits }) {
   const { token } = useContext(UserContext);
   const [habitos, setHabitos] = useState([]);
 
-  useEffect(() => {
-    const request = axios.get(
-      'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits',
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
+  useEffect(
+    () => {
+      const request = axios.get(
+        'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits',
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
 
-    request.catch((response) => {
-      console.log('erro', response);
-    });
+      request.catch((response) => {
+        console.log('erro', response);
+      });
 
-    request.then((response) => {
-      //console.log(response);
-      setHabitos(response.data);
-    });
-  }, []);
+      request.then((response) => {
+        //console.log(response);
+        setHabitos(response.data);
+      });
+    },
+    [reloadHabits],
+    []
+  );
 
   if (habitos.length > 0) {
     return (
       <>
         {habitos.map((habit, index) => (
-          <MyHabits key={index} habit={habit} id={habit.id} />
+          <MyHabits key={index} habit={habit} id={habit.id} reloadHabits={reloadHabits} setReloadHabits={setReloadHabits}/>
         ))}
       </>
     );
@@ -44,7 +48,7 @@ export default function RenderHabits() {
   );
 }
 
-function MyHabits({ habit }) {
+function MyHabits({ habit, reloadHabits, setReloadHabits }) {
   const daysWeek = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
   console.log(habit.id);
   const { token } = useContext(UserContext);
@@ -63,10 +67,9 @@ function MyHabits({ habit }) {
 
       delet.then((response) => {
         console.log(response);
+        setReloadHabits(!reloadHabits);
       });
     }
-
-    
   }
 
   return (
@@ -131,4 +134,5 @@ const Day = styled.div`
   align-items: center;
   font-size: 20px;
   font-weight: 400;
+  font-family: Lexend Deca;
 `;
