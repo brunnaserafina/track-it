@@ -16,7 +16,7 @@ export default function PageLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { setUserimg } = useContext(UserContext);
-  const { setToken } = useContext(UserContext);
+  const { token, setToken } = useContext(UserContext);
 
   function joinLogin(event) {
     event.preventDefault();
@@ -39,9 +39,14 @@ export default function PageLogin() {
     });
 
     promise.then((r) => {
-      console.log(r);
+      //console.log(r);
+      //console.log(r.data.token);
       setToken(r.data.token);
       setUserimg(r.data.image);
+      localStorage.setItem(
+        'trackit',
+        JSON.stringify({ token: r.data.token, timestamp: +new Date() })
+      );
       navigate(`/hoje`);
     });
   }
@@ -55,7 +60,7 @@ export default function PageLogin() {
           $loading={loading}
           type="email"
           placeholder="email"
-          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+          pattern="[a-z0-9._%+-]+@[a-zLink, 0-9.-]+\.[a-z]{2,4}$"
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -69,7 +74,12 @@ export default function PageLogin() {
           onChange={(e) => setPassword(e.target.value)}
         />
         {loading ? (
-          <Button type="submit" width={'80vw'} height={'45px'}>
+          <Button
+            type="submit"
+            width={'80vw'}
+            height={'45px'}
+            fontSize={'21px'}
+          >
             Entrar
           </Button>
         ) : (

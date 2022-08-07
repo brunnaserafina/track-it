@@ -3,6 +3,7 @@ import Footer from './Footer';
 import styled from 'styled-components';
 
 export default function PageToday() {
+
   return (
     <>
       <TodayContainer>

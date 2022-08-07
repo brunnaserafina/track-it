@@ -7,7 +7,7 @@ const Button = styled.button`
   border: none;
   border-radius: 4.6px;
   color: #ffffff;
-  font-size: 21px;
+  font-size: ${(props) => props.fontSize};
   font-weight: 400;
   display: flex;
   justify-content: center;

@@ -77,12 +77,13 @@ export default function PageRegister() {
       <Input
         $loading={loading}
         placeholder="foto"
+        type="url"
         value={picture}
         onChange={(e) => setPicture(e.target.value)}
       />
 
       {loading ? (
-        <Button onClick={joinRegister} width={'80vw'} height={'45px'}>Cadastrar</Button>
+        <Button onClick={joinRegister} width={'80vw'} height={'45px'} fontSize={'21px'}>Cadastrar</Button>
       ) : (
         <Button opacity={'0.7'} width={'80vw'} height={'45px'}>
           <ThreeDots color="#FFFFFF" height={15} />
