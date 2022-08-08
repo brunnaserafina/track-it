@@ -114,6 +114,11 @@ const Habit = styled.span`
     font-size: 20px;
     color: #666666;
   }
+
+  ion-icon {
+    color: #666666;
+    font-size: 15px;
+  }
 `;
 
 const Days = styled.div`
