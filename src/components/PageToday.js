@@ -4,11 +4,27 @@ import styled from 'styled-components';
 import { useState, useContext, useEffect } from 'react';
 import UserContext from '../context/UserContext';
 import axios from 'axios';
+import dayjs from 'dayjs';
+import 'dayjs/locale/pt-br';
 
 export default function PageToday() {
   const { token } = useContext(UserContext);
   const [habitos, setHabitos] = useState([]);
   const [reloadHabits, setReloadHabits] = useState(false);
+  const [done, setDone] = useState('');
+  const containTrue = done.length > 0;
+
+  const date = dayjs().format('DD/MM');
+  const day = dayjs().locale('pt-br').format('dddd');
+  let dayreplace = day.replace('-feira', '');
+  dayreplace = dayreplace.charAt(0).toUpperCase() + dayreplace.slice(1);
+
+  const { percentage, setPercentage } = useContext(UserContext);
+  setPercentage(calcPercentage(done.length, habitos.length));
+
+  function calcPercentage(doneHabits, total) {
+    return (Math.round((doneHabits / total) * 100));
+  }
 
   useEffect(
     () => {
@@ -22,8 +38,9 @@ export default function PageToday() {
       });
 
       request.then((response) => {
-        console.log(response.data);
+        //console.log(response.data);
         setHabitos(response.data);
+        setDone(response.data.filter((habit) => habit.done));
       });
     },
     [reloadHabits],
@@ -34,6 +51,16 @@ export default function PageToday() {
     <>
       <Header />
       <TodayContainer>
+        <DayWeek>
+          {dayreplace}, {date}
+        </DayWeek>
+
+        {containTrue ? (
+          <Concluded color={"#8FC549"}>{percentage}% dos hábitos concluídos</Concluded>
+        ) : (
+          <Concluded color={"#BABABA"}>Nenhum hábito concluído ainda</Concluded>
+        )}
+
         {habitos.map((habit, index) => (
           <MyHabits
             key={index}
@@ -48,9 +75,12 @@ export default function PageToday() {
   );
 }
 
-function MyHabits({ habit, reloadHabits, setReloadHabits }) {
+function MyHabits({ habit, reloadHabits, setReloadHabits, done, setDone }) {
   const { token } = useContext(UserContext);
-  const sameSequence = habit.currentSequence === habit.highestSequence && habit.highestSequence !== 0;
+  const sameSequence =
+    habit.currentSequence === habit.highestSequence &&
+    habit.highestSequence !== 0 &&
+    habit.done === true;
 
   function habitDone() {
     if (habit.done === false) {
@@ -60,10 +90,10 @@ function MyHabits({ habit, reloadHabits, setReloadHabits }) {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       request.catch((response) => {
-        console.log(response);
+        //console.log(response);
       });
       request.then((response) => {
-        console.log(response);
+        //console.log(response);
         setReloadHabits(!reloadHabits);
       });
     } else {
@@ -73,10 +103,10 @@ function MyHabits({ habit, reloadHabits, setReloadHabits }) {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       promise.catch((response) => {
-        console.log(response);
+        //console.log(response);
       });
       promise.then((response) => {
-        console.log(response);
+        //console.log(response);
         setReloadHabits(!reloadHabits);
       });
     }
@@ -92,9 +122,7 @@ function MyHabits({ habit, reloadHabits, setReloadHabits }) {
         </p>
         <p>
           Seu recorde:{' '}
-          <Highest $color={sameSequence}>
-            {habit.highestSequence} dias
-          </Highest>
+          <Highest $color={sameSequence}>{habit.highestSequence} dias</Highest>
         </p>
       </div>
       <Check onClick={habitDone} $color={habit.done}>
@@ -104,12 +132,24 @@ function MyHabits({ habit, reloadHabits, setReloadHabits }) {
   );
 }
 
+const DayWeek = styled.h5`
+  font-size: 23px;
+  color: #126ba5;
+`;
+
 const TodayContainer = styled.div`
   background-color: #e5e5e5;
   height: 200vh;
   padding: 30px 15px;
   margin-top: 70px;
 `;
+
+const Concluded = styled.p`
+  font-size: 18px;
+  color: ${props => props.color};
+  margin-bottom: 25px;
+  margin-top: 7px;
+`
 
 const Sequence = styled.div`
   width: 90vw;
@@ -134,7 +174,6 @@ const Sequence = styled.div`
     color: #666666;
     margin-bottom: 3px;
   }
-
 `;
 
 const Current = styled.span`

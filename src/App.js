@@ -12,7 +12,7 @@ import UserContext from './context/UserContext';
 
 export default function App() {
   const [userimg, setUserimg] = useState('');
-  const [percentage] = useState(0);
+  const [percentage, setPercentage] = useState(0);
   const [token, setToken] = useState('');
   const [loading, setLoading] = useState(true);
   const [week, setWeek] = useState([]);
@@ -25,6 +25,7 @@ export default function App() {
             userimg,
             setUserimg,
             percentage,
+            setPercentage,
             token,
             setToken,
             loading,
