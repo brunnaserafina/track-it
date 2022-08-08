@@ -2,65 +2,62 @@ import axios from 'axios';
 
 const BASE_URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit';
 
-function createHeaders() {
-  const auth = localStorage.getItem('trackit');
+function createHeaders(token) {
+  //const auth = localStorage.getItem('trackit');
+  //console.log(auth);
+
   const config = {
     headers: {
-      Authorization: `Bearer ${auth.token}`,
+      Authorization: `Bearer ${token}`,
     },
   };
-  
+
   return config;
 }
 
 function postSingUp(body) {
   const promise = axios.post(`${BASE_URL}/auth/sign-up`, body);
-
   return promise;
 }
 
 function postLogin(body) {
-  const config = createHeaders();
-  const promise = axios.post(`${BASE_URL}/auth/login`, body, config);
-
+  const promise = axios.post(`${BASE_URL}/auth/login`, body);
   return promise;
 }
 
-function getHabits() {
-  const config = createHeaders();
+function getHabits(token) {
+  const config = createHeaders(token);
   const promise = axios.get(`${BASE_URL}/habits`, config);
-
   return promise;
 }
 
-function postDeleteHabit(ID_DO_HABITO) {
-  const config = createHeaders();
-  const promise = axios.get(`${BASE_URL}/habits/${ID_DO_HABITO}`, config);
-
+function postCreateHabits(body, token) {
+  const config = createHeaders(token);
+  const promise = axios.post(`${BASE_URL}/habits`, body, config);
   return promise;
 }
 
-function getTodayHabits(id) {
-  const config = createHeaders();
+function postDeleteHabit(id, token) {
+  const config = createHeaders(token);
+  const promise = axios.delete(`${BASE_URL}/habits/${id}`, config);
+  return promise;
+}
+
+function getTodayHabits(token) {
+  const config = createHeaders(token);
   const promise = axios.get(`${BASE_URL}/habits/today`, config);
-
   return promise;
 }
 
-function postCheckHabit(ID_DO_HABITO) {
-  const config = createHeaders();
-  const promise = axios.get(`${BASE_URL}/habits/${ID_DO_HABITO}/check`, config);
-
+function postCheckHabit(id, token) {
+  const config = createHeaders(token);
+  const promise = axios.post(`${BASE_URL}/habits/${id}/check`, {}, config);
   return promise;
 }
 
-function postUnCheckHabit(ID_DO_HABITO) {
-  const config = createHeaders();
-  const promise = axios.get(
-    `${BASE_URL}/habits/${ID_DO_HABITO}/uncheck`,
-    config
-  );
-
+function postUnCheckHabit(id, token) {
+  const config = createHeaders(token);
+  const promise = axios.post(`${BASE_URL}/habits/${id}/uncheck`, {}, config);
   return promise;
 }
 
@@ -68,6 +65,7 @@ export {
   postSingUp,
   postLogin,
   getHabits,
+  postCreateHabits,
   postDeleteHabit,
   getTodayHabits,
   postCheckHabit,

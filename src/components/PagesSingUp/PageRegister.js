@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ThreeDots } from 'react-loader-spinner';
-import axios from 'axios';
-import logotrackit from '../assets/imgs/logotrackit.svg';
-import HomeContainer from './common/HomeContainer';
-import Logo from './common/Logo';
-import Input from './common/Input';
-import Button from './common/Button';
-
+import { postSingUp } from '../../services/trackit';
+import logotrackit from '../../assets/imgs/logotrackit.svg';
+import HomeContainer from '../common/HomeContainer';
+import Logo from '../common/Logo';
+import Input from '../common/Input';
+import Button from '../common/Button';
 
 export default function PageRegister() {
   const navigate = useNavigate('');
@@ -15,34 +14,30 @@ export default function PageRegister() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
-  const [picture, setPicture]  = useState('');
+  const [picture, setPicture] = useState('');
+  const body = {
+    email: email,
+    name: name,
+    image: picture,
+    password: password,
+  };
 
   function joinRegister() {
     setLoading(false);
 
-    const promise = axios.post(
-      'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up',
-      {
-        email: email,
-        name: name,
-        image: picture,
-        password: password,
-      }
-    );
-
-    promise.catch(() => {
-      alert('Confira seus dados!');
-      setLoading(true);
-      setEmail("");
-      setPassword("");
-      setName("");
-      setPicture("");
-    });
-
-    promise.then((response) => {
-      console.log(response);
-      navigate(`/`);
-    });
+    postSingUp(body)
+      .catch(() => {
+        alert('Confira seus dados!');
+        setLoading(true);
+        setEmail('');
+        setPassword('');
+        setName('');
+        setPicture('');
+      })
+      .then((response) => {
+        console.log(response);
+        navigate(`/`);
+      });
   }
 
   return (
@@ -83,7 +78,14 @@ export default function PageRegister() {
       />
 
       {loading ? (
-        <Button onClick={joinRegister} width={'80vw'} height={'45px'} fontSize={'21px'}>Cadastrar</Button>
+        <Button
+          onClick={joinRegister}
+          width={'80vw'}
+          height={'45px'}
+          fontSize={'21px'}
+        >
+          Cadastrar
+        </Button>
       ) : (
         <Button opacity={'0.7'} width={'80vw'} height={'45px'}>
           <ThreeDots color="#FFFFFF" height={15} />

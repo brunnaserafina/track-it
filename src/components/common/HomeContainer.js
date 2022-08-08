@@ -7,6 +7,7 @@ const HomeContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: #ffffff;
 
   form {
     display: flex;

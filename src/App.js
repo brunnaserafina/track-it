@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import PageLogin from './components/PageLogin';
-import PageRegister from './components/PageRegister';
-import PageToday from './components/PageToday';
+import PageLogin from './components/PagesSingUp/PageLogin';
+import PageRegister from './components/PagesSingUp/PageRegister';
+import PageToday from './components/PageToday/PageToday';
 import PageHabits from './components/PageHabits/PageHabits';
-import PageHistory from './components/PageHistory';
+import PageHistory from './components/PageHistory/PageHistory';
 import PrivatePage from './components/PrivatePage';
 import './assets/css/reset.css';
 import './assets/css/style.css';

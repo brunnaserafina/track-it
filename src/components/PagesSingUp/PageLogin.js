@@ -1,14 +1,15 @@
-import { useState, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ThreeDots } from 'react-loader-spinner';
-import UserContext from '../context/UserContext';
 import axios from 'axios';
-import Logo from './common/Logo';
-import Input from './common/Input';
-import Button from './common/Button';
-import HomeContainer from './common/HomeContainer';
-import logotrackit from '../assets/imgs/logotrackit.svg';
-
+import logotrackit from '../../assets/imgs/logotrackit.svg';
+import HomeContainer from '../common/HomeContainer';
+import Logo from '../common/Logo';
+import Input from '../common/Input';
+import Button from '../common/Button';
+import { useContext } from 'react';
+import UserContext from '../../context/UserContext';
+import { postLogin } from '../../services/trackit';
 
 export default function PageLogin() {
   const navigate = useNavigate('');
@@ -17,38 +18,36 @@ export default function PageLogin() {
   const [password, setPassword] = useState('');
   const { setUserimg } = useContext(UserContext);
   const { setToken } = useContext(UserContext);
+  const body = {
+    email: email,
+    password: password,
+  };
 
   function joinLogin(event) {
     event.preventDefault();
-    //console.log('alo');
+
     setLoading(false);
 
-    const promise = axios.post(
-      'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login',
-      {
-        email: email,
-        password: password,
-      }
-    );
-
-    promise.catch(() => {
-      alert('E-mail ou senha incorreta!');
-      setLoading(true);
-      setEmail('');
-      setPassword('');
-    });
-
-    promise.then((r) => {
-      //console.log(r);
-      //console.log(r.data.token);
-      setToken(r.data.token);
-      setUserimg(r.data.image);
-      localStorage.setItem(
-        'trackit',
-        JSON.stringify({ token: r.data.token, timestamp: +new Date() })
-      );
-      navigate(`/hoje`);
-    });
+    postLogin(body)
+      .catch(() => {
+        alert('E-mail ou senha incorreta!');
+        setLoading(true);
+        setEmail('');
+        setPassword('');
+      })
+      .then((r) => {
+        setToken(r.data.token);
+        setUserimg(r.data.image);
+        localStorage.setItem(
+          'trackit',
+          JSON.stringify({ token: r.data.token, timestamp: +new Date() })
+        );
+        localStorage.setItem(
+          'user',
+          JSON.stringify({ user: r.data })
+        );
+        navigate(`/hoje`);
+      });
   }
 
   return (

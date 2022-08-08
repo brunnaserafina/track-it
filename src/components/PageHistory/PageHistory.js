@@ -1,5 +1,5 @@
-import Header from './Header';
-import Footer from './Footer';
+import Header from '../Header';
+import Footer from '../Footer';
 import styled from 'styled-components';
 
 export default function History() {
@@ -17,7 +17,6 @@ export default function History() {
 
 const HistoryContainer = styled.div`
   background-color: #e5e5e5;
-  height: 100vh;
   margin-top: 70px;
   padding: 30px 15px;
 
