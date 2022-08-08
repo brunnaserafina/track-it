@@ -8,7 +8,7 @@ import axios from 'axios';
 export default function PageToday() {
   const { token } = useContext(UserContext);
   const [habitos, setHabitos] = useState([]);
-  const [render, setRender] = useState(false);
+  const [reloadHabits, setReloadHabits] = useState(false);
 
   useEffect(
     () => {
@@ -26,7 +26,7 @@ export default function PageToday() {
         setHabitos(response.data);
       });
     },
-    [render],
+    [reloadHabits],
     []
   );
 
@@ -35,7 +35,12 @@ export default function PageToday() {
       <Header />
       <TodayContainer>
         {habitos.map((habit, index) => (
-          <MyHabits key={index} habit={habit} />
+          <MyHabits
+            key={index}
+            habit={habit}
+            reloadHabits={reloadHabits}
+            setReloadHabits={setReloadHabits}
+          />
         ))}
       </TodayContainer>
       <Footer />
@@ -43,17 +48,58 @@ export default function PageToday() {
   );
 }
 
-function MyHabits({ habit }) {
+function MyHabits({ habit, reloadHabits, setReloadHabits }) {
+  const { token } = useContext(UserContext);
+  const sameSequence = habit.currentSequence === habit.highestSequence && habit.highestSequence !== 0;
+
+  function habitDone() {
+    if (habit.done === false) {
+      const request = axios.post(
+        `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habit.id}/check`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      request.catch((response) => {
+        console.log(response);
+      });
+      request.then((response) => {
+        console.log(response);
+        setReloadHabits(!reloadHabits);
+      });
+    } else {
+      const promise = axios.post(
+        `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habit.id}/uncheck`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      promise.catch((response) => {
+        console.log(response);
+      });
+      promise.then((response) => {
+        console.log(response);
+        setReloadHabits(!reloadHabits);
+      });
+    }
+  }
+
   return (
     <Sequence>
       <div>
         <h4>{habit.name}</h4>
-        <p>Sequência atual: {habit.currentSequence} dias</p>
-        <p>Seu recorde: {habit.highestSequence} dias</p>
+        <p>
+          Sequência atual:{' '}
+          <Current $color={habit.done}>{habit.currentSequence} dias</Current>
+        </p>
+        <p>
+          Seu recorde:{' '}
+          <Highest $color={sameSequence}>
+            {habit.highestSequence} dias
+          </Highest>
+        </p>
       </div>
-      <div>
+      <Check onClick={habitDone} $color={habit.done}>
         <ion-icon name="checkbox"></ion-icon>
-      </div>
+      </Check>
     </Sequence>
   );
 }
@@ -89,8 +135,21 @@ const Sequence = styled.div`
     margin-bottom: 3px;
   }
 
+`;
+
+const Current = styled.span`
+  font-size: 13px;
+  color: ${(props) => (props.$color ? '#8FC549' : '#666666')};
+`;
+
+const Highest = styled.span`
+  font-size: 13px;
+  color: ${(props) => (props.$color ? '#8FC549' : '#666666')};
+`;
+
+const Check = styled.div`
   ion-icon {
     font-size: 69px;
-    color: #e7e7e7;
+    color: ${(props) => (props.$color ? '#8FC549' : '#e7e7e7')};
   }
 `;
