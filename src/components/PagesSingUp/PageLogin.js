@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ThreeDots } from 'react-loader-spinner';
-import axios from 'axios';
 import logotrackit from '../../assets/imgs/logotrackit.svg';
 import HomeContainer from '../common/HomeContainer';
 import Logo from '../common/Logo';
@@ -22,6 +21,7 @@ export default function PageLogin() {
     email: email,
     password: password,
   };
+
 
   function joinLogin(event) {
     event.preventDefault();
@@ -50,6 +50,7 @@ export default function PageLogin() {
       });
   }
 
+  
   return (
     <HomeContainer>
       <Logo src={logotrackit} />
