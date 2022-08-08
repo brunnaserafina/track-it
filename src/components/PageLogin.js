@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ThreeDots } from 'react-loader-spinner';
+import UserContext from '../context/UserContext';
 import axios from 'axios';
-import logotrackit from '../assets/imgs/logotrackit.svg';
-import HomeContainer from './common/HomeContainer';
 import Logo from './common/Logo';
 import Input from './common/Input';
 import Button from './common/Button';
-import { useContext } from 'react';
-import UserContext from '../context/UserContext';
+import HomeContainer from './common/HomeContainer';
+import logotrackit from '../assets/imgs/logotrackit.svg';
+
 
 export default function PageLogin() {
   const navigate = useNavigate('');
@@ -16,11 +16,11 @@ export default function PageLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { setUserimg } = useContext(UserContext);
-  const { token, setToken } = useContext(UserContext);
+  const { setToken } = useContext(UserContext);
 
   function joinLogin(event) {
     event.preventDefault();
-    console.log('alo');
+    //console.log('alo');
     setLoading(false);
 
     const promise = axios.post(
