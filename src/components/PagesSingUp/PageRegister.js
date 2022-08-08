@@ -22,7 +22,9 @@ export default function PageRegister() {
     password: password,
   };
 
-  function joinRegister() {
+  function joinRegister(event) {
+    event.preventDefault();
+
     setLoading(false);
 
     postSingUp(body)
@@ -43,55 +45,58 @@ export default function PageRegister() {
   return (
     <HomeContainer>
       <Logo src={logotrackit} />
+      <form onSubmit={joinRegister}>
+        <Input
+          $loading={loading}
+          type="email"
+          placeholder="email"
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <Input
+          $loading={loading}
+          type="password"
+          placeholder="senha"
+          required
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-      <Input
-        $loading={loading}
-        type="email"
-        placeholder="email"
-        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-        required
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <Input
-        $loading={loading}
-        type="password"
-        placeholder="senha"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+        <Input
+          $loading={loading}
+          type="text"
+          placeholder="nome"
+          required
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
 
-      <Input
-        $loading={loading}
-        type="text"
-        placeholder="nome"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
+        <Input
+          $loading={loading}
+          placeholder="foto"
+          type="url"
+          required
+          value={picture}
+          onChange={(e) => setPicture(e.target.value)}
+        />
 
-      <Input
-        $loading={loading}
-        placeholder="foto"
-        type="url"
-        value={picture}
-        onChange={(e) => setPicture(e.target.value)}
-      />
-
-      {loading ? (
-        <Button
-          onClick={joinRegister}
-          width={'80vw'}
-          height={'45px'}
-          fontSize={'21px'}
-        >
-          Cadastrar
-        </Button>
-      ) : (
-        <Button opacity={'0.7'} width={'80vw'} height={'45px'}>
-          <ThreeDots color="#FFFFFF" height={15} />
-        </Button>
-      )}
-
+        {loading ? (
+          <Button
+            type="submit"
+            width={'80vw'}
+            height={'45px'}
+            fontSize={'21px'}
+          >
+            Cadastrar
+          </Button>
+        ) : (
+          <Button opacity={'0.7'} width={'80vw'} height={'45px'}>
+            <ThreeDots color="#FFFFFF" height={15} />
+          </Button>
+        )}
+      </form>
       <Link to={`/`}>
         <p>Já tem uma conta? Faça login!</p>
       </Link>
