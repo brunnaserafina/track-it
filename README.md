@@ -1,70 +1,81 @@
-# Getting Started with Create React App
+<h1 align="left">TrackIt 📈</h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+###
 
-## Available Scripts
+<p align="left">Esta é uma página web para dispositivos mobile, rastreadora de hábitos. Você pode cadastrar um hábito, selecionar os dias da semana que deseja colocá-lo em prática e visualizar seu progresso durante os dias.</p>
 
-In the project directory, you can run:
+###
 
-### `npm start`
+<div align="center"> 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<img height="550" src="https://user-images.githubusercontent.com/106851605/215271833-8eb725f3-43d6-4210-ae19-8af2f5ae0388.gif" />
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+</div> 
 
-### `npm test`
+###
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<p align="center">Acesse a aplicação => https://projeto10-trackit-seven-nu.vercel.app</p>
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+###
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<br clear="both">
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### ⚙️ Funcionalidades
 
-### `npm run eject`
+- Cadastro
+- Login
+- Adicionar hábito
+- Selecionar dias da semana que deverá cumprir o hábito
+- Deletar hábito
+- Dar check nos hábitos cumpridos hoje
+- Visualizar progresso de hoje
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+###
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+<br />
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### 🛠️ Tecnologias utilizadas
 
-## Learn More
+###
+  <img align="left" alt="styled-components" height="30px" src="https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white" />
+  <img align="left" alt="react" height="30px" src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" />
+   <img align="left" alt="react-router" height="30px" src="https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white" />
+   <img align="left" alt="react-router" height="30px" src="https://camo.githubusercontent.com/76fbcc2b8eda3d26d881c9719074ec0af04410fdc2fb02438ffb72535046fb6b/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f72656163742d6170702532302d2532333230323332612e7376673f267374796c653d666f722d7468652d626164676526636f6c6f723d363064646639266c6f676f3d7265616374266c6f676f436f6c6f723d253233363144414642" />
+   <img align="left" alt="axios" height="30px" src="https://camo.githubusercontent.com/02621d023c99135970b1abbfe932b6a6a0b2e42aaebedae5f8299fd88d9ce029/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f6178696f732532302d2532333230323332612e7376673f267374796c653d666f722d7468652d626164676526636f6c6f723d696e666f726d6174696f6e616c" />
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+###
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<br />
+<br />
+<br />
 
-### Code Splitting
+### ▶️ Rodando a aplicação
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+1. Crie ou selecione uma pasta com o nome de sua preferência
+2. Clone este repositório na pasta criada/selecionada:
 
-### Analyzing the Bundle Size
+```bash
+ $ git clone https://github.com/brunnaserafina/track-it.git
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+3. Instale as dependências:
+```bash
+ $ npm i
+```
+4. Você pode, opcionalmente, rodar o build 
+```bash
+ $ npm run build
+```
+5. Rode a aplicação:
+```bash
+ $ npm start
+```
+6. Por fim, acesse http://localhost:3000 no seu browser 
+###
+<br />
 
-### Making a Progressive Web App
+### 🙇🏻‍♀️ Autora
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Feito com ❤️ por [@brunnaserafina](https://www.github.com/brunnaserafina)
