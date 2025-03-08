@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Input = styled.input`
-  width: 80vw;
+  width: 30vw;
   height: 45px;
   border: solid 1px #d4d4d4;
   border-radius: 5px;
@@ -18,7 +18,11 @@ const Input = styled.input`
   }
 
   &:focus {
-    outline: auto #52B6FF;
+    outline: auto #52b6ff;
+  }
+
+  @media (max-width: 768px) {
+    width: 80vw;
   }
 `;
 

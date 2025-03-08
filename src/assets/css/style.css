@@ -1,4 +1,14 @@
 body {
-    font-family: Lexend Deca;
-    background-color: #e5e5e5;;
+  font-family: Lexend Deca;
+  background-color: #e5e5e5;
+}
+
+.delete-icon {
+  cursor: pointer;
+  padding: 8px;
+}
+
+.delete-icon:hover {
+  background-color: rgb(233, 228, 228);
+  border-radius: 50%;
 }

@@ -63,9 +63,9 @@ const HabitsContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
+    padding: 16px 0;
     box-sizing: border-box;
-    width: 100vw;
+    width: 90vw;
   }
 
   > div h4 {

@@ -1,11 +1,11 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Habit = styled.span`
   width: 90vw;
-  height: 91px;
+  height: fit-content;
   border-radius: 5px;
   background-color: #ffffff;
-  margin-bottom: 10px;
+  margin-bottom: 16px;
   padding: 15px;
   box-sizing: border-box;
 
@@ -46,8 +46,6 @@ export const Day = styled.div`
   font-family: Lexend Deca;
 `;
 
-
-
 export const Dayy = styled.button`
   width: 30px;
   height: 30px;
@@ -74,7 +72,7 @@ export const Form = styled.form`
   display: ${(props) => (props.$newhabit ? 'initial' : 'none')};
 
   > span {
-    width: 80vw;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: end;
@@ -93,7 +91,15 @@ export const Cancel = styled.button`
   background-color: #ffffff;
   font-size: 16px;
   color: #52b6ff;
+  border: 1px solid #52b6ff;
+  padding: 8px;
+  border-radius: 4px;
   margin-right: 23px;
   opacity: ${(props) => (props.$save ? '0.6' : '1.0')};
-`;
+  cursor: pointer;
 
+  &:hover {
+    background-color: #52b6ff;
+    color: #ffffff;
+  }
+`;

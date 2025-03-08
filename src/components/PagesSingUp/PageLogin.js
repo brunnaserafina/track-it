@@ -76,14 +76,14 @@ export default function PageLogin() {
         {loading ? (
           <Button
             type="submit"
-            width={'80vw'}
+            width={'30vw'}
             height={'45px'}
             fontSize={'21px'}
           >
             Entrar
           </Button>
         ) : (
-          <Button opacity={'0.7'} width={'80vw'} height={'45px'}>
+          <Button opacity={'0.7'} width={'30vw'} height={'45px'}>
             <ThreeDots color="#FFFFFF" height={15} />
           </Button>
         )}

@@ -61,7 +61,7 @@ function MyHabits({ habit, reloadHabits, setReloadHabits }) {
     <Habit>
       <span>
         <p>{habit.name}</p>
-        <ion-icon name="trash-outline" onClick={deleteHabit}></ion-icon>
+        <ion-icon name="trash-outline" onClick={deleteHabit} class="delete-icon"></ion-icon>
       </span>
 
       <Days>

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const Button = styled.button`
   background-color: #52b6ff;
@@ -13,6 +13,11 @@ const Button = styled.button`
   justify-content: center;
   align-items: center;
   opacity: ${(props) => props.opacity};
+  cursor: pointer;
+
+  @media (max-width: 768px) {
+    width: 80vw;
+  }
 `;
 
 export default Button;

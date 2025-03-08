@@ -85,14 +85,14 @@ export default function PageRegister() {
         {loading ? (
           <Button
             type="submit"
-            width={'80vw'}
+            width={'30vw'}
             height={'45px'}
             fontSize={'21px'}
           >
             Cadastrar
           </Button>
         ) : (
-          <Button opacity={'0.7'} width={'80vw'} height={'45px'}>
+          <Button opacity={'0.7'} width={'30vw'} height={'45px'}>
             <ThreeDots color="#FFFFFF" height={15} />
           </Button>
         )}
